@@ -4,14 +4,16 @@ import android.app.ListActivity
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import com.code.andrew.spent.models.ToDo
+import com.code.andrew.spent.models.Transaction
+import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.Either
-import com.github.kittinunf.fuel.httpGet
 import com.google.gson.GsonBuilder
 
 import org.jetbrains.anko.*
 
 import com.github.salomonbrys.kotson.fromJson
+import com.github.salomonbrys.kotson.get
+import com.google.gson.JsonParser
 
 class TransactionListActivity : ListActivity(), AnkoLogger {
 
@@ -28,19 +30,27 @@ class TransactionListActivity : ListActivity(), AnkoLogger {
         val mAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayListOf(""))
         listAdapter = mAdapter
 
-        // Call URL to get test items
-        val url = "http://jsonplaceholder.typicode.com/todos/"
-        url.httpGet().responseString { request, response, either ->
+        val url = "https://tartan.plaid.com/connect?"
+        val body = "client_id=test_id&secret=test_secret&username=plaid_test&" +
+                    "password=plaid_good&type=wells"
+
+        Fuel.post(url + body).responseString { request, response, either ->
             when (either) {
-                is Either.Left -> toast("Network error, please try again.")
+                is Either.Left -> {
+                    error("Network error - response: " + response)
+                    toast("Network error, please try again.")
+                }
                 is Either.Right -> {
-                    var gson = GsonBuilder().create()
-                    var toDos = gson.fromJson<List<ToDo>>(either.right)
+                    val jsonParser = JsonParser()
+                    val json = jsonParser.parse(either.right).get("transactions")
+
+                    val gson = GsonBuilder().create()
+                    val transactions = gson.fromJson<List<Transaction>>(json)
 
                     mAdapter.clear()
 
-                    for (toDo in toDos) {
-                        mAdapter.add(toDo.title)
+                    for (toDo in transactions) {
+                        mAdapter.add(toDo.name)
                     }
 
                     mAdapter.notifyDataSetChanged()
@@ -48,7 +58,6 @@ class TransactionListActivity : ListActivity(), AnkoLogger {
                 }
             }
         }
-
     }
 }
 
