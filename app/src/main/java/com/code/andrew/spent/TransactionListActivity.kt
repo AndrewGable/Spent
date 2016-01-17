@@ -4,6 +4,7 @@ import android.app.ListActivity
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import com.code.andrew.spent.models.PlaidAccount
 import com.code.andrew.spent.models.Transaction
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.Either
@@ -41,15 +42,12 @@ class TransactionListActivity : ListActivity(), AnkoLogger {
                     toast("Network error, please try again.")
                 }
                 is Either.Right -> {
-                    val jsonParser = JsonParser()
-                    val json = jsonParser.parse(either.right).get("transactions")
-
                     val gson = GsonBuilder().create()
-                    val transactions = gson.fromJson<List<Transaction>>(json)
+                    val plaidAccount = gson.fromJson<PlaidAccount>(either.right)
 
                     mAdapter.clear()
 
-                    for (toDo in transactions) {
+                    for (toDo in plaidAccount.transactions) {
                         mAdapter.add(toDo.name)
                     }
 

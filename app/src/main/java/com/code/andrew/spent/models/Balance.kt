@@ -3,13 +3,13 @@ package com.code.andrew.spent.models
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class Score {
+class Balance {
 
-    @SerializedName("location")
+    @SerializedName("available")
     @Expose
-    val location: Location_? = null
+    val available: Double? = null
 
-    @SerializedName("name")
+    @SerializedName("current")
     @Expose
-    val name: Double? = null
+    val current: Double? = null
 }
