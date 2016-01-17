@@ -5,7 +5,6 @@ import android.app.ProgressDialog
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import com.code.andrew.spent.models.PlaidAccount
-import com.code.andrew.spent.models.Transaction
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.Either
 import com.google.gson.GsonBuilder
@@ -13,8 +12,6 @@ import com.google.gson.GsonBuilder
 import org.jetbrains.anko.*
 
 import com.github.salomonbrys.kotson.fromJson
-import com.github.salomonbrys.kotson.get
-import com.google.gson.JsonParser
 
 class TransactionListActivity : ListActivity(), AnkoLogger {
 

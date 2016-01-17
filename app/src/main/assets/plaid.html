@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1" />
+    <title>Plaid Link</title>
+    <style>
+        html {
+            font-family: "Franklin Gothic", "Univers", "Helvetica Neue", "Helvetica", sans-serif;
+        }
+        body {
+            margin: 5% 15%;
+        }
+        h2, h4 {
+            text-align: center;
+            padding: 10px;
+        }
+        button {
+            position:relative;
+            margin-top:50%;
+            vertical-align: top;
+            width: 100%;
+            height: 60px;
+            font-size: 22px;
+            color: white;
+            text-align: center;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+            background: #3498db;
+            border: 0;
+            border-bottom: 2px solid #2a8bcc;
+            cursor: pointer;
+            -webkit-box-shadow: inset 0 -2px #2a8bcc;
+            box-shadow: inset 0 -2px #2a8bcc;
+        }
+        button:active {
+            top: 1px;
+            outline: none;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+    <h2>Plaid Link</h2>
+
+    <h4>Use Plaid to safely connect your bank account with Spent</h4>
+
+    <!-- A hidden input named public_token will be appended to this form
+    once the user has completed the Link flow. Link will then submit the
+    form, sending the public_token to your server. -->
+    <form id="some-id" method="GET" action="?"></form>
+
+    <!-- To use Link with longtail institutions on Connect, set the
+    data-long-tail attribute to 'true'. See the Parameter Reference for additional
+    documentation. -->
+    <script
+            src="https://cdn.plaid.com/link/stable/link-initialize.js"
+            data-client-name="Client Name"
+            data-form-id="some-id"
+            data-key="test_key"
+            data-product="auth"
+            data-env="tartan">
+    </script>
+</body>
+</html>
